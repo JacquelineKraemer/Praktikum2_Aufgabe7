@@ -1,0 +1,73 @@
+// PAD1 - Praktikum 2
+// Aufgabe 7
+// 762199
+
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    const int x = 50;         //Größe des Arrays
+    char field[x];            //Eindimensionales Array für das Spielfeld
+    int counter = 0;          //Zählt in der Schleife hoch
+    int schritte = 0;         //Schrittzähler
+    int Eingabe = 0;          //Eingabe des Spielers
+    bool GameOver = false;    //Zum Beenden des Programmes
+
+
+    cout << "Welcome to Minesweeper!" << endl << endl;
+    cout << "Geben Sie eine Zahl zwischen 1 und 50 ein." << endl << endl;
+
+    while (counter < x)          //Befüllung des Arrays mit '*'
+    {
+        field[counter] = '*';    //Ausgabe der unaufgedeckten Map mit Sternchen
+        counter++;               //Solange der Counter kleiner 50 ist, wird um 1 erhöht bis die Anzahl erreicht wurde
+
+    }
+
+
+
+    while (!GameOver)      //Solange das Spiel noch läuft = Game Loop
+    {
+        cin >> Eingabe;    //Erwartete Eingabe die jedes Mal erscheint
+
+
+        while (Eingabe > 50)    //Prüft, ob eine Überschreitung der vorgegebenen Spanne vorhanden ist
+        {
+            cout << "Ungültige Eingabe. Versuchen Sie es erneut!" << endl << endl;
+            cin >> Eingabe;
+        }
+        Eingabe = Eingabe - 1;       //-1, da wir schon ab 0-49 Zahlen, der Spieler jedoch von 1-50
+        if (Eingabe == 16 || Eingabe == 46 || Eingabe == 33)    //Plazierte Mienen
+        {
+            field[Eingabe] = 'o';    //Ausgabe der aufgedeckten Mienen im Feld werden mit 'o' überschrieben
+            GameOver = true;         //Wenn Bedingung eintrifft, Spiel verloren
+            cout << "GAME OVER! :(" << endl;
+        }
+        else
+        {
+            field[Eingabe] = 'X';    //Ausgabe eines aufgedeckten Feldes ohne Miene wird mit 'X' überschrieben
+            schritte ++;             //Zählt die unbeschadeten Schritte mit
+        }
+
+        counter = 0;    //Zähler wird zurückgesetzt, um erneut verwenden zu können
+
+        while (counter < x)    //Ausgabe des Spielplans
+        {
+            if (counter % 10 == 0)    //Mod10, sodass eine 5x10 Ausgabe vorhanden ist
+            {
+                cout << endl;    // Nach 10 '*' geschieht ein Zeilenumbruch
+            }
+
+
+
+            cout << field[counter];    //Finale Ausgabe des Spielplans
+            counter++;    //Solange der Counter kleiner 50 ist, wird um 1 erhöht bis die Anzahl erreicht wurde
+        }
+     cout << endl << endl;    //Zeilenausgabe zum erneuten Eintippen einer Zahl
+    }
+
+    cout << "Anzahl der gefahrenlosen Schritte: " << schritte << endl;
+    return 0;
+}
+
